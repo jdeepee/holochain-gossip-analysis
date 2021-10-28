@@ -1,0 +1,16 @@
+{
+  "name": "admin-holochain-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@holochain/conductor-api": "0.2.1",
+    "plotly": "^1.0.6",
+    "vis-timeline": "^7.4.9"
+  }
+}
