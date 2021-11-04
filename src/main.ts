@@ -4,10 +4,14 @@ const fs = require("fs");
 const targetDNA = "842d242e512f664b8dc4c939f965ba7d91c2b209699496e7c6cdaabda188f70055d4e018027086";
 const agentDNA = "842d24fbd991bc77a99d770cde64b673d343a8aef79468682bd3c7cb599913ca9ddd499a4eb4d0";
 const shortFormDNA = "842d24544f2cd5c8ef123a7348e44f243bdcc0a5729a2a61f9c3f6a467d03cf5cc714e6164fdd0";
+///Installed DNA's that you want to get gossip information from
 const whitelistedDNAS = [targetDNA, agentDNA, shortFormDNA];
+///Waited time between state dump requests to holochain for gossip status (be warned each call dumps the whole local state)
 const waitTime = 10000;
 
-const iterations = 250;
+///Number of state dump iterations to make
+const iterations = 5;
+
 let counter = 0;
 
 interface Result {
@@ -21,6 +25,9 @@ interface Result {
 const results : { [key:string] : Result; } = {};
 
 async function main() {
+    if (!fs.existsSync("./graphs")) {
+        fs.mkdir("./graphs");
+    };
     try {
         const admin = await conductor.AdminWebsocket.connect(`http://localhost:2000`, 60000)
         for (const dna of whitelistedDNAS) {
@@ -55,7 +62,7 @@ async function main() {
 
         writeData(JSON.stringify(results), "results.json");
         sleep(5000);
-        process.exit(1);
+        process.exit(0);
     } catch (e) {
         console.error(e);
         //@ts-ignore
